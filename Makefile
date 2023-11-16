@@ -6,7 +6,7 @@
 #    By: seonmiki <seonmiki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 19:03:47 by seonmiki          #+#    #+#              #
-#    Updated: 2023/11/15 19:12:26 by seonmiki         ###   ########.fr        #
+#    Updated: 2023/11/16 15:34:12 by seonmiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 clean :
 	$(MAKE) -C ./libft fclean
-	rm -rf $(OBJ_DIR)
+	rm -rf mandatory/object
+	rm -rf bonus/object
 
 fclean : clean
 	rm -rf $(NAME)

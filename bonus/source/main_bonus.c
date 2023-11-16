@@ -6,7 +6,7 @@
 /*   By: seonmiki <seonmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:06:04 by seonmiki          #+#    #+#             */
-/*   Updated: 2023/11/16 15:13:29 by seonmiki         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:14:23 by seonmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,15 @@ void	inout_file_open(int file[2], int argc, char **argv)
 		error("file open failed");
 }
 
-void	pipe_open(int fd[2])
-{
-	if (pipe(fd) < 0)
-		error("pipe error");
-}
-
-pid_t	make_fork(void)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		error("fork error");
-	return (pid);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipe;
 	pid_t	pid;
 
 	pipe.child_cnt = 0;
-	if (argc >= 5)
+	if (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])))
+		heredoc(pipe, argv, envp);
+	else if (argc >= 5)
 	{
 		inout_file_open(pipe.file, argc, argv);
 		while (pipe.child_cnt < argc - 3)
@@ -63,8 +49,7 @@ int	main(int argc, char **argv, char **envp)
 				parent_process(pipe);
 			pipe.child_cnt++;
 		}
-		close(pipe.fd[WRITE]);
-		close(pipe.fd[READ]);
+		close_pipe(pipe.fd);
 		wait_process(pipe.child_cnt);
 	}
 	else
